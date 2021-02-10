@@ -1,0 +1,43 @@
+﻿namespace Melinoe.Shared.Ghosts
+{
+    public enum GhostFirstName
+    {
+        Barbara,
+        Betty,
+        Carol,
+        Charles,
+        Christopher,
+        Daniel,
+        David,
+        Donald,
+        Donna,
+        Dorothy,
+        Elizabeth,
+        George,
+        Helen,
+        James,
+        Jennifer,
+        John,
+        Joseph,
+        Karen,
+        Kenneth,
+        Linda,
+        Lisa,
+        Margaret,
+        Maria,
+        Mark,
+        Mary,
+        Michael,
+        Nancy,
+        Patricia,
+        Paul,
+        Richard,
+        Robert,
+        Ruth,
+        Sandra,
+        Steven,
+        Susan,
+        Thomas,
+        William
+    }
+}

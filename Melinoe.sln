@@ -1,0 +1,44 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30914.41
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Melinoe.Server", "Server\Melinoe.Server.csproj", "{2F84A415-9A9E-48D5-89AA-5E9DC960FB3C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Melinoe.Client", "Client\Melinoe.Client.csproj", "{78A1D22C-D1BF-4F1F-AC2C-78D3D8368443}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Melinoe.Shared", "Shared\Melinoe.Shared.csproj", "{DF56D361-DDA4-41DA-BC38-97EF355E9088}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{264E215C-8C36-4503-A221-2A4D30A435E5}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		LICENSE = LICENSE
+		README.md = README.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2F84A415-9A9E-48D5-89AA-5E9DC960FB3C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F84A415-9A9E-48D5-89AA-5E9DC960FB3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F84A415-9A9E-48D5-89AA-5E9DC960FB3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F84A415-9A9E-48D5-89AA-5E9DC960FB3C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78A1D22C-D1BF-4F1F-AC2C-78D3D8368443}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78A1D22C-D1BF-4F1F-AC2C-78D3D8368443}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78A1D22C-D1BF-4F1F-AC2C-78D3D8368443}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78A1D22C-D1BF-4F1F-AC2C-78D3D8368443}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF56D361-DDA4-41DA-BC38-97EF355E9088}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF56D361-DDA4-41DA-BC38-97EF355E9088}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF56D361-DDA4-41DA-BC38-97EF355E9088}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF56D361-DDA4-41DA-BC38-97EF355E9088}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9AA402F2-086A-4453-8CB1-CFA80AFA0232}
+	EndGlobalSection
+EndGlobal
