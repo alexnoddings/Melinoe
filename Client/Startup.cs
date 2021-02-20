@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.Http;
+using Blazored.Toast;
 using Blazorise;
 using Blazorise.Bootstrap;
 using Blazorise.Icons.FontAwesome;
@@ -50,6 +51,8 @@ namespace Melinoe.Client
             });
             services.AddBootstrapProviders();
             services.AddFontAwesomeIcons();
+
+            services.AddBlazoredToast();
         }
 
         public void Configure(WebAssemblyHost host)

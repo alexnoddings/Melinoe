@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Blazorise;
@@ -29,7 +28,7 @@ namespace Melinoe.Client.Components
 
         private Validations _validations;
 
-        public async Task Connect()
+        public void Connect()
         {
             if (!_validations.ValidateAll())
                 return;
