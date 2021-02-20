@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Net.Http;
+using Blazorise;
+using Blazorise.Bootstrap;
+using Blazorise.Icons.FontAwesome;
 using Fluxor;
 using Melinoe.Client.Middleware;
 using Melinoe.Client.Services;
@@ -37,6 +40,23 @@ namespace Melinoe.Client
             });
 
             services.AddScoped<GameService>();
+
+            services.AddBlazorise(options =>
+            {
+                options.ChangeTextOnKeyPress = true;
+
+                options.DelayTextOnKeyPress = true;
+                options.DelayTextOnKeyPressInterval = 300;
+            });
+            services.AddBootstrapProviders();
+            services.AddFontAwesomeIcons();
+        }
+
+        public void Configure(WebAssemblyHost host)
+        {
+            host.Services
+                .UseBootstrapProviders()
+                .UseFontAwesomeIcons();
         }
     }
 }
