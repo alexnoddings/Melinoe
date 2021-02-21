@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.Http;
+using Blazored.LocalStorage;
 using Blazored.Toast;
 using Blazorise;
 using Blazorise.Bootstrap;
@@ -53,6 +54,7 @@ namespace Melinoe.Client
             services.AddFontAwesomeIcons();
 
             services.AddBlazoredToast();
+            services.AddBlazoredLocalStorage();
         }
 
         public void Configure(WebAssemblyHost host)

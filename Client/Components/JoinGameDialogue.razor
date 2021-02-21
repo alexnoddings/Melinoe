@@ -12,19 +12,19 @@
                         <Validations @ref="_validations" Mode="ValidationMode.Manual">
                             <Field>
                                 <FieldLabel>Game Code</FieldLabel>
-                                <Validation @ref="_game_code_validator" Validator="@IsValidGameCode">
+                                <Validation @ref="_gameCodeValidator" Validator="@IsValidGameCode">
                                     @*
                                         Normally, hitting enter would submit a form. However, a Regex EditMask will prevent the enter from registering.
                                         The [\n\r]? at the end of the regex allows the enter keystroke to be captured and processed.
                                     *@
-                                    <TextEdit @bind-Text="@Model.GameCode" Placeholder="123456" DelayTextOnKeyPress="false" MaskType="MaskType.RegEx" EditMask="^[0-9\n]{0,6}[\n\r]?$" FocusOut="() => _game_code_validator.Validate()" KeyUp="RevalidateSubmit"/>
+                                    <TextEdit @bind-Text="@Model.GameCode" Placeholder="123456" DelayTextOnKeyPress="false" MaskType="MaskType.RegEx" EditMask="^[0-9\n]{0,6}[\n\r]?$" FocusOut="() => _gameCodeValidator.Validate()" KeyUp="RevalidateSubmit"/>
                                 </Validation>
                                 <FieldHelp>Game code must be 6 digits.</FieldHelp>
                             </Field>
                             <Field>
                                 <FieldLabel>Username</FieldLabel>
-                                <Validation @ref="_user_name_validator" Validator="@IsValidUserName">
-                                    <TextEdit @bind-Text="@Model.UserName" Placeholder="Albert" DelayTextOnKeyPress="false" MaskType="MaskType.RegEx" EditMask="^[a-zA-Z0-9]{0,20}[\n\r]?$" FocusOut="() => _user_name_validator.Validate()" KeyUp="RevalidateSubmit"/>
+                                <Validation @ref="_userNameValidator" Validator="@IsValidUserName">
+                                    <TextEdit @bind-Text="@Model.UserName" Placeholder="Albert" DelayTextOnKeyPress="false" MaskType="MaskType.RegEx" EditMask="^[a-zA-Z0-9]{0,20}[\n\r]?$" FocusOut="() => _userNameValidator.Validate()" KeyUp="RevalidateSubmit"/>
                                 </Validation>
                                 <FieldHelp>Username must be between 4 and 20 alphanumeric characters.</FieldHelp>
                             </Field>

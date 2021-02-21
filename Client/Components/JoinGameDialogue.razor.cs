@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Blazored.LocalStorage;
 using Blazorise;
 using Fluxor;
 using Melinoe.Client.State.JoinGame;
@@ -24,20 +25,35 @@ namespace Melinoe.Client.Components
         [Inject]
         public IDispatcher Dispatcher { get; set; }
 
+        [Inject]
+        public ILocalStorageService LocalStorageService { get; set; }
+
         private bool CanSubmit { get; set; } = false;
 
         private JoinGameModel Model { get; } = new();
 
         private Validations _validations;
-        private Validation _game_code_validator;
-        private Validation _user_name_validator;
+        private Validation _gameCodeValidator;
+        private Validation _userNameValidator;
 
-        public void Connect()
+        protected override async Task OnInitializedAsync()
+        {
+            await base.OnInitializedAsync();
+
+            if (await LocalStorageService.ContainKeyAsync("Username"))
+            {
+                Model.UserName = await LocalStorageService.GetItemAsStringAsync("Username");
+                _userNameValidator.Validate(Model.UserName);
+            }
+        }
+
+        public async Task Connect()
         {
             if (!_validations.ValidateAll())
                 return;
 
             _validations.ClearAll();
+            await LocalStorageService.SetItemAsync("Username", Model.UserName);
             Dispatcher.Dispatch(new JoinGameAction(Model.GameCode, Model.UserName));
         }
 
