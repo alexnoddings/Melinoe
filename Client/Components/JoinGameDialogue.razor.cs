@@ -24,9 +24,13 @@ namespace Melinoe.Client.Components
         [Inject]
         public IDispatcher Dispatcher { get; set; }
 
+        private bool CanSubmit { get; set; } = false;
+
         private JoinGameModel Model { get; } = new();
 
         private Validations _validations;
+        private Validation _game_code_validator;
+        private Validation _user_name_validator;
 
         public void Connect()
         {
@@ -35,6 +39,11 @@ namespace Melinoe.Client.Components
 
             _validations.ClearAll();
             Dispatcher.Dispatch(new JoinGameAction(Model.GameCode, Model.UserName));
+        }
+
+        private void RevalidateSubmit()
+        {
+            CanSubmit = IsValidGameCode(Model.GameCode) && IsValidUserName(Model.UserName);
         }
 
         private static bool IsValidGameCode(string gameCode) => gameCode is not null && Regex.IsMatch(gameCode, @"^[0-9]{6}$");
