@@ -2,126 +2,130 @@
 @using Melinoe.Shared.Ghosts
 @using Melinoe.Shared.Objectives
 @using Melinoe.Shared.Possibilities
+@using Icon = Blazorise.Icons.FontAwesome.Icon
 @inherits FluxorComponent
 
-<h1>@Game.Code</h1>
-<button @onclick="ResetGame">reset</button>
-<p>@string.Join(", ", Game.Players)</p>
+<Container Class="game" Fluid="true">
+    <Row Margin="Margin.Is2.OnY">
+        <Container>
+            <Row>
+                <Column ColumnSize="ColumnSize.Is6.OnDesktop.Is3.WithOffset.OnDesktop.IsFull.OnMobile">
+                    <Heading Size="HeadingSize.Is1" Alignment="TextAlignment.Center" Color="TextColor.Primary">
+                        @Game.Code
+                    </Heading>
+                </Column>
+                <Column ColumnSize="ColumnSize.Is3.OnDesktop.IsFull.OnMobile" Display="Display.Flex.ReverseRow.OnDesktop.Flex.Column.OnMobile">
+                    <Button Color="Color.Danger" Clicked="ResetGame" Margin="Margin.IsAuto.OnX.OnMobile">Reset</Button>
+                </Column>
+                </Row>
+        </Container>
+    </Row>
+    <Row Margin="Margin.Is2.OnY">
+        <Column>
+            <Paragraph Alignment="TextAlignment.Center" Color="TextColor.Secondary">
+                Connected Players: @string.Join(", ", Game.Players)
+            </Paragraph>
+        </Column>
+    </Row>
+    <Row Margin="Margin.Is2.OnY" Display="Display.Flex">
+        <Column ColumnSize="ColumnSize.IsAuto" Margin="Margin.IsAuto.OnX" Display="Display.Flex.Row">
+            <Dropdown Margin="Margin.Is2.OnX">
+                <DropdownToggle Color="Color.Primary">@(Game.FirstName?.ToString() ?? "First Name")</DropdownToggle>
+                <DropdownMenu Class="name-select">
+                    @foreach (GhostFirstName firstName in Enum.GetValues<GhostFirstName>())
+                    {
+                        <DropdownItem Active="@(Game.FirstName == firstName)" Clicked="() => UpdateFirstName(firstName)">@firstName</DropdownItem>
+                    }
+                </DropdownMenu>
+            </Dropdown>
+            <Dropdown Margin="Margin.Is1.OnX">
+                <DropdownToggle Color="Color.Primary">@(Game.LastName?.ToString() ?? "Last Name")</DropdownToggle>
+                <DropdownMenu>
+                    @foreach (GhostLastName lastName in Enum.GetValues<GhostLastName>())
+                    {
+                        <DropdownItem Active="@(Game.LastName == lastName)" Clicked="() => UpdateLastName(lastName)">@lastName</DropdownItem>
+                    }
+                </DropdownMenu>
+            </Dropdown>
+        </Column>
+    </Row>
+    <Row Margin="Margin.Is2.OnY.IsAuto.OnX" Class="justify-content-center">
+        @foreach (Objective objective in Enum.GetValues<Objective>())
+        {
+            bool isEnabled = Game.Objectives.HasFlag(objective);
+            <Column Margin="Margin.Is1" Padding="Padding.Is0" ColumnSize="ColumnSize.IsAuto.OnDesktop.Is3.OnMobile">
+                <Button Block="true" Color="(isEnabled ? Color.Secondary : Color.Dark)" Clicked="() => UpdateObjective(objective, !isEnabled)">
+                    <Icon Name="@(isEnabled ? "fa-clipboard-list" : "fa-clipboard-check")" Margin="Margin.Is1.FromRight"  />
+                    @objective
+                </Button>
+            </Column>
+        }
+    </Row>
+    <Row Margin="Margin.Is2.OnY" Padding="Padding.Is3.OnX">
+        <Table Margin="Margin.IsAuto.OnX.Is0.FromBottom" Borderless="true" Narrow="true" Responsive="true" Style="max-width: 1000px;">
+            <TableHeader>
+                <TableRow>
+                    <TableHeaderCell></TableHeaderCell>
+                    @foreach (EvidencePossibility evidence in Game.EvidencePossibilities)
+                    {
+                        // Overridden if the possibility is forced (i.e. the evidence is definite but wasn't set, or is not possible but wasn't set)
+                        bool isOverridden =
+                        (evidence.Possibility == Possibility.NotPossible && evidence.OriginalState != EvidenceState.NotPresent)
+                        || (evidence.Possibility == Possibility.Definite && evidence.OriginalState != EvidenceState.Present);
 
-<p>
-    <h3>@(Game.FirstName?.ToString() ?? "First Name")</h3>
-    @foreach (var firstName in Enum.GetValues<GhostFirstName>())
-    {
-        <button @onclick="() => UpdateFirstName(firstName)">@firstName</button>
-    }
-</p>
+                        TextColor textColor = GetHeaderTextColor(evidence.Possibility);
+                        TextColor iconColor = isOverridden ? TextColor.Muted : textColor;
 
-<p>
-    <h3>@(Game.LastName?.ToString() ?? "Last Name")</h3>
-    @foreach (var lastName in Enum.GetValues<GhostLastName>())
-    {
-        <button @onclick="() => UpdateLastName(lastName)">@lastName</button>
-    }
-</p>
-
-<p>
-    @foreach (var objective in Enum.GetValues<Objective>())
-    {
-        bool isEnabled = Game.Objectives.HasFlag(objective);
-        <button class="@(isEnabled ? "text-success" : "text-warning")" @onclick="() => UpdateObjective(objective, !isEnabled)">@objective</button>
-    }
-</p>
-
-<table class="table table-borderless">
-    <thead>
-        <tr class="text-center">
-            <th class="text-start">Ghost</th>
-            @foreach (var evidence in Game.EvidencePossibilities)
-            {
-                string colourClass =
-                evidence.Possibility switch
+                        <TableHeaderCell>
+                            <Column Display="Display.Flex.Column">
+                                <Text Alignment="TextAlignment.Center" Color="textColor">@evidence.Type</Text>
+                                <Field Display="Display.Flex.Row" JustifyContent="JustifyContent.Center" Margin="Margin.Is0">
+                                    <Button Size="Size.ExtraSmall" Disabled="@isOverridden" Outline="false" Clicked="() => UpdateEvidence(evidence.Type, EvidenceState.NotPresent)">
+                                        <Text Color="iconColor">
+                                            <Icon Name="IconName.Times"  />
+                                        </Text>
+                                    </Button>
+                                    <Button Size="Size.ExtraSmall" Disabled="@isOverridden" Outline="false" Clicked="() => UpdateEvidence(evidence.Type, EvidenceState.Unsure)">
+                                        <Text Color="iconColor">
+                                            <Icon Name="@("fa-question")"  />
+                                        </Text>
+                                    </Button>
+                                    <Button Size="Size.ExtraSmall" Disabled="@isOverridden" Outline="false" Clicked="() => UpdateEvidence(evidence.Type, EvidenceState.Present)">
+                                        <Text Color="iconColor">
+                                            <Icon Name="IconName.Check"  />
+                                        </Text>
+                                    </Button>
+                                </Field>
+                            </Column>
+                        </TableHeaderCell>
+                    }
+                </TableRow>
+            </TableHeader>
+            <TableBody>
+                @foreach (GhostPossibility ghostPossibility in Game.GhostPossibilities)
                 {
-                    Possibility.Definite => "text-success",
-                    Possibility.Possible => "text-warning",
-                    _ => "text-danger"
-                };
-                // Overridden if the possibility is forced (i.e. the evidence is definite but wasn't set, or is not possible but wasn't set)
-                bool isOverridden =
-                (evidence.Possibility == Possibility.NotPossible && evidence.OriginalState != EvidenceState.NotPresent)
-                || (evidence.Possibility == Possibility.Definite && evidence.OriginalState != EvidenceState.Present);
-
-                <th>
-                    <div class="d-flex flex-column">
-                        <i class="@colourClass">@evidence.Type</i>
-                        <div class="d-flex flex-row justify-content-center">
-                            @if (isOverridden)
+                    Possibility possibility = ghostPossibility.Possibility;
+                    <TableRow Background="@(possibility == Possibility.Definite ? Background.Success : Background.Transparent)" TextColor="GetBodyTextColor(possibility)">
+                        <TableRowHeader>
+                            @ghostPossibility.Ghost.Name
+                        </TableRowHeader>
+                        @foreach (EvidencePossibility evidence in Game.EvidencePossibilities)
+                        {
+                            if ((ghostPossibility.Ghost.RequiredEvidence & evidence.Type) == evidence.Type)
                             {
-                                <button class="btn btn-sm disabled" disabled>
-                                    <i class="fas fa-times" />
-                                </button>
-                                <button class="btn btn-sm font-weight-bold disabled" disabled>
-                                    <i class="fas fa-question"></i>
-                                </button>
-                                <button class="btn btn-sm disabled" disabled>
-                                    <i class="fas fa-check" />
-                                </button>
+                                <TableRowCell TextAlignment="TextAlignment.Center">
+                                    <Icon Name="@("fa-bullseye")"  />
+                                </TableRowCell>
                             }
                             else
                             {
-                                <button class="btn btn-sm @colourClass @(evidence.Possibility == Possibility.NotPossible ? "font-weight-bold" : null)"
-                                @onclick="() => UpdateEvidence(evidence.Type, EvidenceState.NotPresent)">
-                                    <i class="fas fa-times" />
-                                </button>
-                                <button class="btn btn-sm @colourClass @(evidence.Possibility == Possibility.Possible ? "font-weight-bold" : null)"
-                                @onclick="() => UpdateEvidence(evidence.Type, EvidenceState.Unsure)">
-                                    <i class="fas fa-question"></i>
-                                </button>
-                                <button class="btn btn-sm @colourClass @(evidence.Possibility == Possibility.Definite ? "font-weight-bold" : null)"
-                                @onclick="() => UpdateEvidence(evidence.Type, EvidenceState.Present)">
-                                    <i class="fas fa-check" />
-                                </button>
+                                <TableRowCell>
+                                </TableRowCell>
                             }
-                        </div>
-                    </div>
-                </th>
-            }
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var ghost in Game.GhostPossibilities)
-        {
-            string classAttr =
-            ghost.Possibility == Possibility.Definite ? "table-success font-weight-bold"
-            : ghost.Possibility == Possibility.Possible ? "table-light"
-            : "text-muted";
-            <tr class="@classAttr">
-                <td class="@(ghost.Possibility == Possibility.Definite ? "text-success" : ghost.Possibility == Possibility.Possible ? "text-warning" : "") text-left">
-                    @ghost.Ghost.Name
-                </td>
-                @foreach (var evidence in Game.EvidencePossibilities)
-                {
-                    if ((ghost.Ghost.RequiredEvidence & evidence.Type) == evidence.Type)
-                    {
-                        string iconClass;
-                        if (ghost.Possibility == Possibility.Definite)
-                            iconClass = "text-success";
-                        else if (evidence.Possibility == Possibility.Definite && ghost.Possibility != Possibility.NotPossible)
-                            iconClass = "text-success";
-                        else if (evidence.Possibility == Possibility.Possible && ghost.Possibility == Possibility.Possible)
-                            iconClass = "text-warning";
-                        else
-                            iconClass = "text-muted";
-                        <td class="text-center">
-                            <i class="fas fa-bullseye @iconClass"></i>
-                        </td>
-                    }
-                    else
-                    {
-                        <td>
-                        </td>
-                    }
+                        }
+                    </TableRow>
                 }
-            </tr>
-        }
-    </tbody>
-</table>
+            </TableBody>
+        </Table>
+    </Row>
+</Container>

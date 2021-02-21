@@ -1,4 +1,5 @@
-﻿using Fluxor;
+﻿using Blazorise;
+using Fluxor;
 using Melinoe.Client.State;
 using Melinoe.Client.State.ResetGame;
 using Melinoe.Client.State.UpdateEvidence;
@@ -7,6 +8,7 @@ using Melinoe.Client.State.UpdateObjectives;
 using Melinoe.Shared.Evidence;
 using Melinoe.Shared.Ghosts;
 using Melinoe.Shared.Objectives;
+using Melinoe.Shared.Possibilities;
 using Microsoft.AspNetCore.Components;
 
 namespace Melinoe.Client.Components
@@ -35,5 +37,21 @@ namespace Melinoe.Client.Components
 
         private void ResetGame() =>
             Dispatcher.Dispatch(new ResetGameAction());
+
+        private TextColor GetHeaderTextColor(Possibility possibility) =>
+            possibility switch
+            {
+                Possibility.Definite => TextColor.Success,
+                Possibility.Possible => TextColor.Warning,
+                Possibility.NotPossible => TextColor.Danger
+            };
+
+        private TextColor GetBodyTextColor(Possibility possibility) =>
+            possibility switch
+            {
+                Possibility.Definite => TextColor.Body,
+                Possibility.Possible => TextColor.Warning,
+                Possibility.NotPossible => TextColor.Muted
+            };
     }
 }

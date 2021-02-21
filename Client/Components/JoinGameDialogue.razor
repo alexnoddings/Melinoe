@@ -1,5 +1,40 @@
 ﻿@inherits FluxorComponent
 
-<input @bind-value="UserName" />
-<input @bind-value="GameCode" />
-<button @onclick="Connect">Connect</button>
+<Container>
+    <Row>
+        <Column>
+            <Card Margin="Margin.IsAuto.OnX.Is5.FromTop" Style="max-width: 400px; width: 100%;">
+                <CardHeader>
+                    <Heading Margin="Margin.IsAuto" Size="HeadingSize.Is4" Alignment="TextAlignment.Center">Join Game</Heading>
+                </CardHeader>
+                <CardBody>
+                    <Blazorise.Form>
+                        <Validations @ref="_validations" Mode="ValidationMode.Manual">
+                            <Field>
+                                <FieldLabel>Game Code</FieldLabel>
+                                <Validation @ref="_game_code_validator" Validator="@IsValidGameCode">
+                                    @*
+                                        Normally, hitting enter would submit a form. However, a Regex EditMask will prevent the enter from registering.
+                                        The [\n\r]? at the end of the regex allows the enter keystroke to be captured and processed.
+                                    *@
+                                    <TextEdit @bind-Text="@Model.GameCode" Placeholder="123456" DelayTextOnKeyPress="false" MaskType="MaskType.RegEx" EditMask="^[0-9\n]{0,6}[\n\r]?$" FocusOut="() => _game_code_validator.Validate()" KeyUp="RevalidateSubmit"/>
+                                </Validation>
+                                <FieldHelp>Game code must be 6 digits.</FieldHelp>
+                            </Field>
+                            <Field>
+                                <FieldLabel>Username</FieldLabel>
+                                <Validation @ref="_user_name_validator" Validator="@IsValidUserName">
+                                    <TextEdit @bind-Text="@Model.UserName" Placeholder="Albert" DelayTextOnKeyPress="false" MaskType="MaskType.RegEx" EditMask="^[a-zA-Z0-9]{0,20}[\n\r]?$" FocusOut="() => _user_name_validator.Validate()" KeyUp="RevalidateSubmit"/>
+                                </Validation>
+                                <FieldHelp>Username must be between 4 and 20 alphanumeric characters.</FieldHelp>
+                            </Field>
+                            <Button Disabled="!CanSubmit" Block="true" Color="Color.Primary" Clicked="@Connect" Type="ButtonType.Submit" PreventDefaultOnSubmit="true">
+                                <Icon Name="IconName.Add"/> Connect
+                            </Button>
+                        </Validations>
+                    </Blazorise.Form>
+                </CardBody>
+            </Card>
+        </Column>
+    </Row>
+</Container>

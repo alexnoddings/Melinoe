@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Melinoe.Server.Game;
 using Melinoe.Server.Services;
@@ -23,6 +24,12 @@ namespace Melinoe.Server.Hubs
 
         public async Task<GameStateDto> JoinAsync(string gameCode, string userName)
         {
+            if (!Regex.IsMatch(gameCode, @"^[0-9]{6}$"))
+                throw new HubException("Invalid game code.");
+
+            if (!Regex.IsMatch(userName, @"^[a-zA-Z0-9]{4,20}$"))
+                throw new HubException("Invalid username.");
+
             GameState gameState = await _gameService.JoinAsync(Context.ConnectionId, gameCode, userName);
             await Groups.AddToGroupAsync(Context.ConnectionId, gameCode);
             await Clients.GroupExcept(gameCode, Context.ConnectionId).OnPlayersUpdated(gameState.Users.Select(u => u.UserName).ToList());
@@ -43,7 +50,7 @@ namespace Melinoe.Server.Hubs
         {
             GameState? newState = await _gameService.UpdateEvidenceStateAsync(Context.ConnectionId, evidenceType, evidenceState);
             if (newState is null)
-                return;
+                throw new HubException("Invalid input.");
 
             await Clients.Group(newState.GameCode).OnEvidenceUpdated(newState.EvidenceStates, newState.EvidencePossibilities, newState.GhostPossibilities);
         }
@@ -52,7 +59,7 @@ namespace Melinoe.Server.Hubs
         {
             GameState? newState = await _gameService.UpdateFirstNameAsync(Context.ConnectionId, firstName);
             if (newState is null)
-                return;
+                throw new HubException("Invalid input.");
 
             await Clients.Group(newState.GameCode).OnFirstNameUpdated(newState.FirstName);
         }
@@ -61,7 +68,7 @@ namespace Melinoe.Server.Hubs
         {
             GameState? newState = await _gameService.UpdateLastNameAsync(Context.ConnectionId, lastName);
             if (newState is null)
-                return;
+                throw new HubException("Invalid input.");
 
             await Clients.Group(newState.GameCode).OnLastNameUpdated(newState.LastName);
         }
@@ -70,7 +77,7 @@ namespace Melinoe.Server.Hubs
         {
             GameState? newState = await _gameService.UpdateObjectiveAsync(Context.ConnectionId, objective, isEnabled);
             if (newState is null)
-                return;
+                throw new HubException("Invalid input.");
 
             await Clients.Group(newState.GameCode).OnObjectivesUpdated(newState.Objectives);
         }
@@ -80,7 +87,7 @@ namespace Melinoe.Server.Hubs
             GameState? newState = await _gameService.ResetAsync(Context.ConnectionId);
 
             if (newState is null)
-                return;
+                throw new HubException("Invalid input.");
 
             GameStateDto dto = new()
             {

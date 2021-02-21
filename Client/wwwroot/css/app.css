@@ -16,3 +16,25 @@
         right: 0.75rem;
         top: 0.5rem;
     }
+
+html, body {
+    height: 100%;
+}
+
+#app {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    background: #100C16;
+}
+
+.pre-loading {
+    color: #EEEEEE;
+}
+
+.name-select {
+    max-height: 95vh;
+    overflow: auto;
+    overflow-x: hidden;
+}
