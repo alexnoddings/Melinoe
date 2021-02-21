@@ -1,16 +1,16 @@
 ﻿@inherits FluxorComponent
 
-<Container Fluid="true">
+<Container>
     <Row>
         <Column>
-            <Text Display="Display.Flex.Column" Alignment="TextAlignment.Center">
+            <Text Display="Display.Flex.Column" Alignment="TextAlignment.Center" Color="TextColor.Primary">
                 <Heading Margin="Margin.IsAuto.OnX.Is5.FromTop" Size="HeadingSize.Is1">
                     Joining Game
                 </Heading>
                 <Heading Margin="Margin.IsAuto.OnX" Size="HeadingSize.Is1">
                     @Game.Code
                 </Heading>
-                <div class="spinner-border text-primary mx-auto" role="status">
+                <div class="spinner-border mx-auto" role="status">
                     <span class="sr-only">Loading...</span>
                 </div>
             </Text>
