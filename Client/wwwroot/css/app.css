@@ -29,6 +29,10 @@ html, body {
     background: #100C16;
 }
 
+.pre-loading {
+    color: #EEEEEE;
+}
+
 .name-select {
     max-height: 95vh;
     overflow: auto;
