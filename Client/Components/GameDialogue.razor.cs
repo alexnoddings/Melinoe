@@ -10,6 +10,7 @@ using Melinoe.Shared.Ghosts;
 using Melinoe.Shared.Objectives;
 using Melinoe.Shared.Possibilities;
 using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Localization;
 
 namespace Melinoe.Client.Components
 {
@@ -20,6 +21,9 @@ namespace Melinoe.Client.Components
 
         [Inject]
         public IDispatcher Dispatcher { get; set; }
+        
+        [Inject]
+        public IStringLocalizer<App> Localiser { get; set; }
 
         public GameState Game => State.Value;
 
