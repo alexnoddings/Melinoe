@@ -3,6 +3,7 @@
 @using Melinoe.Shared.Objectives
 @using Melinoe.Shared.Possibilities
 @using Icon = Blazorise.Icons.FontAwesome.Icon
+@using Melinoe.Client.Extensions
 @inherits FluxorComponent
 
 <Container Class="game" Fluid="true">
@@ -56,7 +57,7 @@
             <Column Margin="Margin.Is1" Padding="Padding.Is0" ColumnSize="ColumnSize.IsAuto.OnDesktop.Is3.OnMobile">
                 <Button Block="true" Color="(isEnabled ? Color.Secondary : Color.Dark)" Clicked="() => UpdateObjective(objective, !isEnabled)">
                     <Icon Name="@(isEnabled ? "fa-clipboard-list" : "fa-clipboard-check")" Margin="Margin.Is1.FromRight"  />
-                    @objective
+                    @Localiser.Get(objective)
                 </Button>
             </Column>
         }
@@ -78,7 +79,9 @@
 
                         <TableHeaderCell>
                             <Column Display="Display.Flex.Column">
-                                <Text Alignment="TextAlignment.Center" Color="textColor">@evidence.Type</Text>
+                                <Text Alignment="TextAlignment.Center" Color="textColor">
+                                    @Localiser.Get(evidence.Type)
+                                </Text>
                                 <Field Display="Display.Flex.Row" JustifyContent="JustifyContent.Center" Margin="Margin.Is0">
                                     <Button Size="Size.ExtraSmall" Disabled="@isOverridden" Outline="false" Clicked="() => UpdateEvidence(evidence.Type, EvidenceState.NotPresent)">
                                         <Text Color="iconColor">
@@ -107,7 +110,7 @@
                     Possibility possibility = ghostPossibility.Possibility;
                     <TableRow Background="@(possibility == Possibility.Definite ? Background.Success : Background.Transparent)" TextColor="GetBodyTextColor(possibility)">
                         <TableRowHeader>
-                            @ghostPossibility.Ghost.Name
+                            @Localiser.Get(ghostPossibility.Ghost.Name)
                         </TableRowHeader>
                         @foreach (EvidencePossibility evidence in Game.EvidencePossibilities)
                         {

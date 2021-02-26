@@ -55,6 +55,8 @@ namespace Melinoe.Client
 
             services.AddBlazoredToast();
             services.AddBlazoredLocalStorage();
+
+            services.AddLocalization(options => options.ResourcesPath = "Resources");
         }
 
         public void Configure(WebAssemblyHost host)
