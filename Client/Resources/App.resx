@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Banshee" xml:space="preserve">
+    <value>Banshee</value>
+  </data>
+  <data name="Crucifix" xml:space="preserve">
+    <value>Crucifix</value>
+  </data>
+  <data name="Demon" xml:space="preserve">
+    <value>Demon</value>
+  </data>
+  <data name="EmfLevel5" xml:space="preserve">
+    <value>EMF Level 5</value>
+  </data>
+  <data name="EmfReader" xml:space="preserve">
+    <value>EMF Reader</value>
+  </data>
+  <data name="Fingerprints" xml:space="preserve">
+    <value>Fingerprints</value>
+  </data>
+  <data name="FreezingTemperatures" xml:space="preserve">
+    <value>Freezing Temperatures</value>
+  </data>
+  <data name="GhostEvent" xml:space="preserve">
+    <value>Ghost Event</value>
+  </data>
+  <data name="GhostOrbs" xml:space="preserve">
+    <value>Ghost Orbs</value>
+  </data>
+  <data name="GhostWriting" xml:space="preserve">
+    <value>Ghost Writing</value>
+  </data>
+  <data name="Jinn" xml:space="preserve">
+    <value>Jinn</value>
+  </data>
+  <data name="Mare" xml:space="preserve">
+    <value>Mare</value>
+  </data>
+  <data name="MotionSensor" xml:space="preserve">
+    <value>Motion Sensor</value>
+  </data>
+  <data name="Oni" xml:space="preserve">
+    <value>Oni</value>
+  </data>
+  <data name="Phantom" xml:space="preserve">
+    <value>Phantom</value>
+  </data>
+  <data name="Photo" xml:space="preserve">
+    <value>Photo</value>
+  </data>
+  <data name="Poltergeist" xml:space="preserve">
+    <value>Poltergeist</value>
+  </data>
+  <data name="Revenant" xml:space="preserve">
+    <value>Revenant</value>
+  </data>
+  <data name="Salt" xml:space="preserve">
+    <value>Salt</value>
+  </data>
+  <data name="Shade" xml:space="preserve">
+    <value>Shade</value>
+  </data>
+  <data name="SmudgeArea" xml:space="preserve">
+    <value>Smudge Area</value>
+  </data>
+  <data name="Spirit" xml:space="preserve">
+    <value>Spirit</value>
+  </data>
+  <data name="SpiritBox" xml:space="preserve">
+    <value>Spirit Box</value>
+  </data>
+  <data name="Wraith" xml:space="preserve">
+    <value>Wraith</value>
+  </data>
+  <data name="Yurei" xml:space="preserve">
+    <value>Yurei</value>
+  </data>
+</root>
