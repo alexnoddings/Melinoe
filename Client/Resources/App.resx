@@ -1,5 +1,64 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
   <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
     <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
@@ -61,17 +120,26 @@
   <data name="Banshee" xml:space="preserve">
     <value>Banshee</value>
   </data>
+  <data name="Candle" xml:space="preserve">
+    <value>Detect with Candle</value>
+  </data>
   <data name="Crucifix" xml:space="preserve">
     <value>Crucifix</value>
   </data>
   <data name="Demon" xml:space="preserve">
     <value>Demon</value>
   </data>
+  <data name="DotsProjector" xml:space="preserve">
+    <value>D.O.T.S Projector</value>
+  </data>
   <data name="EmfLevel5" xml:space="preserve">
     <value>EMF Level 5</value>
   </data>
   <data name="EmfReader" xml:space="preserve">
     <value>EMF Reader</value>
+  </data>
+  <data name="EscapeNoDeaths" xml:space="preserve">
+    <value>Escape with No Deaths</value>
   </data>
   <data name="Fingerprints" xml:space="preserve">
     <value>Fingerprints</value>
@@ -88,14 +156,26 @@
   <data name="GhostWriting" xml:space="preserve">
     <value>Ghost Writing</value>
   </data>
+  <data name="Goryo" xml:space="preserve">
+    <value>Goryo</value>
+  </data>
+  <data name="Hantu" xml:space="preserve">
+    <value>Hantu</value>
+  </data>
   <data name="Jinn" xml:space="preserve">
     <value>Jinn</value>
+  </data>
+  <data name="LowSanity" xml:space="preserve">
+    <value>&lt;25% Sanity</value>
   </data>
   <data name="Mare" xml:space="preserve">
     <value>Mare</value>
   </data>
   <data name="MotionSensor" xml:space="preserve">
     <value>Motion Sensor</value>
+  </data>
+  <data name="Myling" xml:space="preserve">
+    <value>Myling</value>
   </data>
   <data name="Oni" xml:space="preserve">
     <value>Oni</value>
@@ -121,6 +201,9 @@
   <data name="SmudgeArea" xml:space="preserve">
     <value>Smudge Area</value>
   </data>
+  <data name="SmudgeHunt" xml:space="preserve">
+    <value>Smudge During a Hunt</value>
+  </data>
   <data name="Spirit" xml:space="preserve">
     <value>Spirit</value>
   </data>
@@ -129,6 +212,9 @@
   </data>
   <data name="Wraith" xml:space="preserve">
     <value>Wraith</value>
+  </data>
+  <data name="Yokai" xml:space="preserve">
+    <value>Yokai</value>
   </data>
   <data name="Yurei" xml:space="preserve">
     <value>Yurei</value>

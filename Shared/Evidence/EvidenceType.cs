@@ -6,10 +6,11 @@ namespace Melinoe.Shared.Evidence
     public enum EvidenceType
     {
         EmfLevel5 = 1 << 1,
-        Fingerprints = 1 << 2,
-        FreezingTemperatures = 1 << 3,
-        GhostOrbs = 1 << 4,
-        GhostWriting = 1 << 5,
-        SpiritBox = 1 << 6
+        GhostOrbs = 1 << 2,
+        SpiritBox = 1 << 3,
+        FreezingTemperatures = 1 << 4,
+        Fingerprints = 1 << 5,
+        GhostWriting = 1 << 6,
+        DotsProjector = 1 << 7,
     }
 }

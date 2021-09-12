@@ -11,6 +11,10 @@ namespace Melinoe.Shared.Objectives
         MotionSensor = 1 << 4,
         SmudgeArea = 1 << 5,
         Crucifix = 1 << 6,
-        Salt = 1 << 7
+        Salt = 1 << 7,
+        Candle = 1 << 8,
+        EscapeNoDeaths = 1 << 9,
+        SmudgeHunt = 1 << 10,
+        LowSanity = 1 << 11,
     }
 }
