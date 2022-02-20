@@ -31,7 +31,7 @@
             </MudButton>
             @if (JoinError is not null)
             {
-                <MudAlert Severity="Severity.Error">
+                <MudAlert Class="mt-4" Severity="Severity.Error" Variant="Variant.Filled">
                     @JoinError
                 </MudAlert>
             }

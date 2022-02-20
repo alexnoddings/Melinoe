@@ -1,0 +1,110 @@
+﻿@using Microsoft.Extensions.Localization
+@inherits GameComponent
+@inject IStringLocalizer<App> Localiser
+
+<MudPaper Class="pa-3 mx-auto" Style="max-width: 650px;">
+    <MudGrid Class="px-14">
+        @foreach (var evidence in Game.Evidences.OrderBy(evidence => GetEvidenceOrder(evidence.Type)))
+        {
+            <MudItem xs="6" Class="py-2">
+                <MudText Typo="Typo.h5">
+                    <MudButton Color="EvicenceColour(evidence.State)"
+                            StartIcon="@EvidenceIcon(evidence.State)"
+                            OnClick="() => ProgressEvidenceAsync(evidence)"
+                            Size="Size.Large">
+                        @Localiser[evidence.Type.ToString()]
+                    </MudButton>
+                </MudText>
+            </MudItem>
+        }
+    </MudGrid>
+    <MudDivider Class="my-4 mx-8" Light="true" />
+    <MudGrid>
+        @foreach (var ghost in Game.Ghosts.OrderBy(ghost => GetGhostOrder(ghost.Type)))
+        {
+            <MudItem xs="4">
+                <MudText Color="GhostColour(ghost.State)" Align="Align.Center" Typo="Typo.h5">
+                    @Localiser[ghost.Type.ToString()]
+                </MudText>
+            </MudItem>
+        }
+    </MudGrid>
+</MudPaper>
+
+@code
+{
+    private async Task ProgressEvidenceAsync(IEvidence evidence) =>
+        await (evidence.State switch
+        {
+            EvidenceState.Unknown => Game.UpdateEvidenceAsync(evidence.Type, EvidenceState.Present),
+            EvidenceState.Present => Game.UpdateEvidenceAsync(evidence.Type, EvidenceState.Missing),
+            _ => Game.UpdateEvidenceAsync(evidence.Type, EvidenceState.Unknown),
+        });
+
+    private Color EvicenceColour(EvidenceState evidenceState) =>
+        evidenceState switch
+        {
+            EvidenceState.Unknown => Color.Default,
+            EvidenceState.Present => Color.Success,
+            EvidenceState.Missing => Color.Error,
+            _ => Color.Default
+        };
+
+    private string EvidenceIcon(EvidenceState evidenceState) =>
+        evidenceState switch
+        {
+            EvidenceState.Unknown => Icons.Filled.CheckBoxOutlineBlank,
+            EvidenceState.Present => Icons.Filled.CheckBox,
+            EvidenceState.Missing => Icons.Filled.IndeterminateCheckBox,
+            _ => ""
+        };
+
+    private Color GhostColour(GhostState ghostState) =>
+        ghostState switch
+        {
+            GhostState.Potential => Color.Default,
+            GhostState.NotPossible => Color.Error,
+            GhostState.Definite => Color.Success,
+            _ => Color.Default
+        };
+
+    private int GetEvidenceOrder(EvidenceType evidenceType) =>
+        evidenceType switch
+        {
+            EvidenceType.EmfLevel5 => 0,
+            EvidenceType.DotsProjector => 1,
+            EvidenceType.Fingerprints => 2,
+            EvidenceType.GhostOrbs => 3,
+            EvidenceType.GhostWriting => 4,
+            EvidenceType.SpiritBox => 5,
+            EvidenceType.FreezingTemperatures => 6,
+            _ => 99
+        };
+
+    private int GetGhostOrder(GhostType ghostType) =>
+        ghostType switch
+        {
+	        GhostType.Spirit => 0,
+	        GhostType.Wraith => 1,
+	        GhostType.Phantom => 2,
+	        GhostType.Poltergeist => 3,
+	        GhostType.Banshee => 4,
+	        GhostType.Jinn => 5,
+	        GhostType.Mare => 6,
+	        GhostType.Revenant => 7,
+	        GhostType.Shade => 8,
+	        GhostType.Demon => 9,
+	        GhostType.Yurei => 10,
+	        GhostType.Oni => 11,
+	        GhostType.Yokai => 12,
+	        GhostType.Hantu => 13,
+	        GhostType.Goryo => 14,
+	        GhostType.Myling => 15,
+	        GhostType.Onryo => 16,
+	        GhostType.Twins => 17,
+	        GhostType.Raiju => 18,
+	        GhostType.Obake => 19,
+	        GhostType.Mimic => 20,
+            _ => 99
+        };
+}
