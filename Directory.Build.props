@@ -1,0 +1,39 @@
+<Project>
+
+  <PropertyGroup Label="Project Info">
+    <Product>Melinoe</Product>
+  </PropertyGroup>
+  
+  <PropertyGroup Label="Analysers">
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <AnalysisLevel>latest</AnalysisLevel>
+    <AnalysisMode>Default</AnalysisMode>
+  </PropertyGroup>
+
+  <PropertyGroup Label="Conventions">
+    <!-- Use the preview language version by default -->
+    <LangVersion>preview</LangVersion>
+    <!-- Enables Strict mode for Roslyn compiler -->
+    <Features>strict</Features>
+    <!-- Always use nullable context where possible -->
+    <Nullable>enable</Nullable>
+    <!-- Enable implicit usings -->
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <PropertyGroup Label="Warnings and Errors">
+    <!-- Treat all warnings as errors -->
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    
+    <!-- Warnings to ignore and not surface -->
+    <NoWarn>
+      $(NoWarn);
+    </NoWarn>
+    
+    <!-- Warnings to not treat as errors but still surface -->
+    <WarningsNotAsErrors>
+      $(WarningsNotAsErrors);
+    </WarningsNotAsErrors>
+  </PropertyGroup>
+
+</Project>

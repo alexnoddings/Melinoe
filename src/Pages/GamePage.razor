@@ -1,0 +1,94 @@
+﻿@page "/{GameCode:int?}"
+@using Melinoe.Game
+@using Melinoe.Game.Connection
+@using Melinoe.Game.Container
+@using Melinoe.Game.Table
+@using Microsoft.Extensions.Localization
+@implements IDisposable
+
+<PageTitle>
+    @((Subscription is null ? "Join Game" : $"In Game {Subscription.GameCode}") + " 👻")
+</PageTitle>
+
+@if (Subscription is null)
+{
+    <ConnectDialogue Create="Create" Join="Join" JoinError="@JoinError" />
+}
+else
+{
+    <GameContainer Subscription="Subscription" Leave="Leave" />
+}
+
+@code {
+    [Parameter]
+    public int? GameCode { get; set; }
+
+    [Inject]
+    private GameCollection Games { get; set; } = default!;
+
+    [Inject]
+    private NavigationManager NavigationManager { get; set; } = default!;
+
+    private IGameSubscription? Subscription { get; set; }
+
+    private string? JoinError { get; set; }
+
+    protected override void OnInitialized()
+    {
+        if (GameCode is null)
+            return;
+
+        // OnInitialized is called twice when Prerendered - once at prerender, once when hydrated
+        if (Subscription is not null)
+            return;
+
+        Join(GameCode.Value, false);
+    }
+
+    private void Create()
+    {
+        Subscription = Games.Create();
+        Subscription.Game.OnUpdated += OnGameUpdatedAsync;
+        NavigationManager.NavigateTo($"/{Subscription.GameCode}");
+    }
+
+    private void Join(int code) => Join(code, true);
+
+    private void Join(int code, bool navigateOnSuccess)
+    {
+        Subscription = Games.Get(code);
+        if (Subscription is not null)
+        {
+            if (navigateOnSuccess)
+                NavigationManager.NavigateTo($"/{Subscription.GameCode}");
+            Subscription.Game.OnUpdated += OnGameUpdatedAsync;
+        }
+        else
+        {
+            JoinError = $"Game {code} not found";
+            NavigationManager.NavigateTo("/");
+        }
+    }
+
+    private void Leave()
+    {
+        if (Subscription is not null)
+        {
+            Subscription.Game.OnUpdated -= OnGameUpdatedAsync;
+            Subscription.Dispose();
+            Subscription = null;
+        }
+        NavigationManager.NavigateTo("/");
+    }
+
+    private Task OnGameUpdatedAsync() => InvokeAsync(StateHasChanged);
+
+    public void Dispose()
+    {
+        if (Subscription is null)
+            return;
+
+        Subscription.Game.OnUpdated -= OnGameUpdatedAsync;
+        Subscription.Dispose();
+    }
+}

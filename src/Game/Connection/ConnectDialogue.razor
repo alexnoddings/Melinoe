@@ -1,0 +1,54 @@
+﻿<MudContainer MaxWidth="MaxWidth.Medium" Class="pt-3 pb-6">
+    <div class="d-flex flex-column justify-center mx-auto" style="max-width: 300px">
+        <MudText Align="Align.Center" Typo="Typo.h2">
+            Melione
+        </MudText>
+        <MudPaper Class="pa-3 mt-5">
+            <MudNumericField T="int?"
+                            @bind-Value="GameCode"
+                            Label="Game Code"
+                            Variant="Variant.Text"
+                            Class="auto-focus ma-0 mb-3"
+                            Min="0"
+                            Max="999999"
+                            HideSpinButtons="true" />
+            <MudButton OnClick="() => { if (GameCode is not null) Join(GameCode.Value); }"
+                    FullWidth="true"
+                    Variant="Variant.Outlined">
+                Join game
+            </MudButton>
+            <div class="d-flex flex-row align-center justify-center my-6">
+                <MudDivider Class="flex-grow-1" />
+                <MudText Typo="Typo.caption" Class="mx-3">
+                    OR
+                </MudText>
+                <MudDivider Class="flex-grow-1" />
+            </div>
+            <MudButton OnClick="Create"
+                    FullWidth="true"
+                    Variant="Variant.Outlined">
+                Create game
+            </MudButton>
+            @if (JoinError is not null)
+            {
+                <MudAlert Class="mt-4" Severity="Severity.Error" Variant="Variant.Filled">
+                    @JoinError
+                </MudAlert>
+            }
+        </MudPaper>
+    </div>
+</MudContainer>
+
+@code
+{
+    private int? GameCode { get; set; }
+
+    [Parameter, EditorRequired]
+    public Action<int> Join { get; set; } = _ => { };
+
+    [Parameter, EditorRequired]
+    public Action Create { get; set; } = () => { };
+    
+    [Parameter, EditorRequired]
+    public string? JoinError { get; set; }
+}

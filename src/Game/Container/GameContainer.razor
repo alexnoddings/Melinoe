@@ -1,0 +1,120 @@
+﻿@using Blazored.LocalStorage
+@using Melinoe.Game
+@using Melinoe.Game.Classic
+@using Melinoe.Game.Table
+@inherits GameComponent
+
+<PageTitle>
+    In Game @Subscription.GameCode 👻
+</PageTitle>
+
+<MudContainer MaxWidth="MaxWidth.Medium" Class="pt-3 pb-6">
+    <div class="d-flex flex-row justify-center align-center">
+        <MudText Align="Align.Center" Typo="Typo.h4">
+            @Subscription.GameCode
+        </MudText>
+        <MudIconButton Icon="@Icons.Material.Filled.ContentCopy" OnClick="CopyLinkToClipboardAsync" Class="ml-1 pa-2" />
+    </div>
+    <div class="d-flex flew-row justify-center align-end mt-1 mb-4">
+        <div class="mx-2" style="width: 120px;">
+            <MudText Align="Align.Center" Typo="Typo.body1">
+                View Type
+            </MudText>
+            @if (ViewType == GameViewType.Table)
+            {
+                <MudButton Variant="Variant.Outlined" 
+                            Color="Color.Primary" 
+                            OnClick="() => UpdateViewTypeAsync(GameViewType.Classic)"
+                            FullWidth="true">
+                    Table
+                </MudButton>
+            }
+            else
+            {
+                <MudButton Variant="Variant.Outlined" 
+                            Color="Color.Primary" 
+                            OnClick="() => UpdateViewTypeAsync(GameViewType.Table)"
+                            FullWidth="true">
+                    Classic
+                </MudButton>
+            }
+        </div>
+        <div class="mx-2" style="width: 120px;">
+            <MudText Align="Align.Center" Typo="Typo.body1">
+                Game Type
+            </MudText>
+            @if (Subscription.Game.Type == GameType.Nightmare)
+            {
+                <MudButton Variant="Variant.Outlined" 
+                            Color="Color.Error" 
+                            OnClick="() => Subscription.Game.UpdateTypeAsync(GameType.Normal)"
+                            FullWidth="true">
+                    Nightmare
+                </MudButton>
+            }
+            else
+            {
+                <MudButton Variant="Variant.Outlined" 
+                            Color="Color.Primary" 
+                            OnClick="() => Subscription.Game.UpdateTypeAsync(GameType.Nightmare)"
+                            FullWidth="true">
+                    Normal
+                </MudButton>
+            }
+        </div>
+        <MudDivider Vertical="true" FlexItem="true" Class="mt-6 mx-2" Light="true" />
+        <MudButton Class="mx-2"
+                   OnClick="Leave"
+                   Variant="Variant.Outlined"
+                   Color="Color.Error"
+                   EndIcon="@Icons.Filled.ExitToApp">
+            Leave
+        </MudButton>
+    </div>
+
+    @if (ViewType == GameViewType.Table)
+    {
+        <GameTable Subscription="Subscription" />
+    }
+    else if (ViewType == GameViewType.Classic)
+    {
+        <ClassicGameView Subscription="Subscription" />
+    }
+</MudContainer>
+
+@code {
+    [Inject]
+    private IJSRuntime JsRuntime { get; set; } = default!;
+
+    [Inject]
+    private NavigationManager NavigationManager { get; set; } = default!;
+
+    [Inject]
+    private ILocalStorageService LocalStorage { get; set; } = default!;
+
+    [Parameter, EditorRequired]
+    public Action Leave { get; set; } = () => { };
+
+    private enum GameViewType { Table, Classic }
+    private GameViewType ViewType { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender)
+            return;
+
+        ViewType = await LocalStorage.GetItemAsync<GameViewType>("GameView");
+        StateHasChanged();
+    }
+
+    private async Task UpdateViewTypeAsync(GameViewType newViewType)
+    {
+        ViewType = newViewType;
+        await LocalStorage.SetItemAsync<GameViewType>("GameView", newViewType);
+    }
+
+    private string PageLink => NavigationManager.ToAbsoluteUri($"/{Subscription?.GameCode}").ToString();
+
+    private async Task CopyLinkToClipboardAsync() =>
+        await JsRuntime.InvokeVoidAsync("clipboardInterop.copy", PageLink);
+}

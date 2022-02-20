@@ -1,0 +1,52 @@
+﻿<MudThemeProvider Theme="Theme" IsDarkMode="true" />
+<MudDialogProvider/>
+<MudSnackbarProvider/>
+<Router AppAssembly="@typeof(App).Assembly">
+    <Found Context="routeData">
+        <RouteView RouteData="@routeData" />
+        <FocusOnNavigate RouteData="@routeData" Selector=".auto-focus input" />
+    </Found>
+    <NotFound>
+        @{
+            NavigationManager.NavigateTo("/");
+        }
+    </NotFound>
+</Router>
+
+@code {
+    [Inject]
+    private NavigationManager NavigationManager { get; set; } = default!;
+
+    private MudTheme Theme { get; } = new MudTheme
+    {
+        PaletteDark = new Palette
+        {
+            Background = "#0A0A0F",
+            Surface = "#1A1A1F",
+
+            Primary = "#6600FF",
+            Error = "#BA1D1F",
+            Warning = "#D6651E",
+            Success = "#1ED649",
+
+            TableStriped = "#222227",
+            TableHover = "#252033",
+
+            // MudBlazor defaults
+            Black = "#27272f",
+            TextPrimary = "rgba(255,255,255, 0.95)",
+            TextSecondary = "rgba(255,255,255, 0.85)",
+            ActionDefault = "rgba(255,255,255, 0.85)",
+            ActionDisabled = "rgba(150,150,150, 0.60)",
+            ActionDisabledBackground = "rgba(255,255,255, 0.12)",
+            Divider = "rgba(255,255,255, 0.75)",
+            DividerLight = "rgba(255,255,255, 0.55)",
+            TableLines = "rgba(255,255,255, 0.12)",
+            LinesDefault = "rgba(255,255,255, 0.12)",
+            LinesInputs = "rgba(255,255,255, 0.3)",
+            TextDisabled = "rgba(255,255,255, 0.2)",
+            Info = "#3299ff",
+            Dark = "#27272f",
+        }
+    };
+}

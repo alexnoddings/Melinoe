@@ -1,0 +1,65 @@
+﻿@inherits GameComponent
+
+<MudSimpleTable Dense="true" Hover="true" Bordered="true" Striped="true" Style="overflow-x: auto;">
+    <thead>
+        <tr>
+            <th>Ghost</th>
+            @foreach (var evidence in Game.Evidences)
+            {
+                <th>
+                    <div class="d-flex flex-column align-center">
+                        <HeaderEvidenceIcon Evidence="evidence" />
+                        <div class="d-flex flex-row">
+                            <EvidenceStateButton Game="Game" Evidence="evidence" State="EvidenceState.Missing" />
+                            <EvidenceStateButton Game="Game" Evidence="evidence" State="EvidenceState.Unknown" />
+                            <EvidenceStateButton Game="Game" Evidence="evidence" State="EvidenceState.Present" />
+                        </div>
+                    </div>
+                </th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var ghost in Game.Ghosts)
+        {
+            <tr style="@RowStyle(ghost.State)">
+                <td class="px-2 py-1">
+                    <MudText Color="GhostNameColor(ghost)">
+                        @ghost.Type
+                    </MudText>
+                </td>
+                @foreach (var evidence in Game.Evidences)
+                {
+                    <td class="px-2 py-1">
+                        @if (ghost.RequiredEvidence.HasFlag(evidence.Type))
+                        {
+                            <div class="d-flex justify-center">
+                                <ColumnEvidenceIcon Evidence="evidence" GhostState="ghost.State" />
+                            </div>
+                        }
+                    </td>
+                }
+            </tr>
+        }
+    </tbody>
+</MudSimpleTable>
+
+@code 
+{
+    private string RowStyle(GhostState ghostState) =>
+            ghostState switch
+            {
+                GhostState.Potential => "",
+                GhostState.NotPossible => "background-color: var(--mud-palette-error-lighten)",
+                GhostState.Definite => "background-color: var(--mud-palette-success)",
+                _ => "",
+            };
+
+    private Color GhostNameColor(IGhost ghost) =>
+        ghost.State switch
+        {
+            GhostState.Definite => Color.Default,
+            GhostState.NotPossible => Color.Dark,
+            _ => Color.Inherit
+        };
+}
