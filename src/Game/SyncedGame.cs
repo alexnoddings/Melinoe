@@ -57,6 +57,16 @@ public class SyncedGame
 			await OnUpdated.Invoke();
 	}
 
+	public async Task ResesEvidenceAsync()
+	{
+		foreach (var evidence in _evidences)
+			evidence.State = EvidenceState.Unknown;
+
+		RecalculateGhostStates();
+		if (OnUpdated is not null)
+			await OnUpdated.Invoke();
+	}
+
 	public async Task UpdateTypeAsync(GameType newType)
 	{
 		Type = newType;
