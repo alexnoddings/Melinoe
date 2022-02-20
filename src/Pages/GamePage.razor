@@ -1,0 +1,116 @@
+﻿@page "/{GameCode:int?}"
+@using Melinoe.Game
+@implements IDisposable
+
+<PageTitle>
+    @(Subscription is null ? "Join Game" : $"In Game {Subscription.GameCode}")
+</PageTitle>
+
+@if (Subscription is null)
+{
+    <h4>Home</h4>
+    <hr/>
+    <input @bind-value="InputCode" class="auto-focus"></input>
+    <button @onclick="Join">Join</button>
+    <hr/>
+    <button @onclick="Create">Create</button>
+}
+else
+{
+    <h4>@Subscription.GameCode</h4>
+    <p>
+        @NavigationManager.ToAbsoluteUri($"/{Subscription.GameCode}")
+    </p>
+    <hr/>
+    @foreach (var evidence in Subscription.Game.Evidences)
+    {
+        var capturedEvidence = evidence;
+        <p>
+            <text>@evidence.Type:</text>
+            <button @onclick="() => Subscription.Game.UpdateEvidenceAsync(capturedEvidence.Type, EvidenceState.Missing)" disabled="@(capturedEvidence.State == EvidenceState.Missing)">
+                @EvidenceState.Missing
+            </button>
+            <button @onclick="() => Subscription.Game.UpdateEvidenceAsync(capturedEvidence.Type, EvidenceState.Unknown)" disabled="@(capturedEvidence.State == EvidenceState.Unknown)">
+                @EvidenceState.Unknown
+            </button>
+            <button @onclick="() => Subscription.Game.UpdateEvidenceAsync(capturedEvidence.Type, EvidenceState.Present)" disabled="@(capturedEvidence.State == EvidenceState.Present)">
+                @EvidenceState.Present
+            </button>
+        </p>
+    }
+    <hr/>
+    <button @onclick="Leave">Leave</button>
+}
+
+@code {
+    [Parameter]
+    public int? GameCode { get; set; }
+
+    [Inject]
+    private GameCollection Games { get; set; } = default!;
+
+    [Inject]
+    private NavigationManager NavigationManager { get; set; } = default!;
+
+    private string InputCode { get; set; } = string.Empty;
+
+    private IGameSubscription? Subscription { get; set; }
+
+    protected override void OnInitialized()
+    {
+        if (GameCode is null)
+            return;
+
+        // OnInitialized is called twice when Prerendered - once at prerender, once when hydrated
+        if (Subscription is not null)
+            return;
+
+        Subscription = Games.Get(GameCode.Value);
+        if (Subscription is null)
+            NavigationManager.NavigateTo("/");
+        else
+            Subscription.Game.OnUpdated += OnGameUpdatedAsync;
+    }
+
+    private void Create()
+    {
+        Subscription = Games.Create();
+        Subscription.Game.OnUpdated += OnGameUpdatedAsync;
+        NavigationManager.NavigateTo($"/{Subscription.GameCode}");
+    }
+
+    private void Join()
+    {
+        if (!int.TryParse(InputCode, out int gameCode))
+            return;
+
+        Subscription = Games.Get(gameCode);
+        if (Subscription is not null)
+        {
+            NavigationManager.NavigateTo($"/{Subscription.GameCode}");
+            Subscription.Game.OnUpdated += OnGameUpdatedAsync;
+        }
+    }
+
+    private void Leave()
+    {
+        if (Subscription is not null)
+        {
+            Subscription.Game.OnUpdated -= OnGameUpdatedAsync;
+            Subscription.Dispose();
+            Subscription = null;
+        }
+        NavigationManager.NavigateTo("/"); 
+    }
+
+    private Task OnGameUpdatedAsync() => InvokeAsync(StateHasChanged);
+
+    public void Dispose()
+    {
+        if (Subscription is null)
+            return;
+            
+        Subscription.Game.OnUpdated -= OnGameUpdatedAsync;
+        Subscription.Dispose();
+    }
+}

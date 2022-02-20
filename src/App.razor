@@ -1,0 +1,16 @@
+﻿<Router AppAssembly="@typeof(App).Assembly">
+    <Found Context="routeData">
+        <RouteView RouteData="@routeData" DefaultLayout="@typeof(AppLayout)" />
+        <FocusOnNavigate RouteData="@routeData" Selector=".auto-focus" />
+    </Found>
+    <NotFound>
+        @{
+            NavigationManager.NavigateTo("/");
+        }
+    </NotFound>
+</Router>
+
+@code {
+    [Inject]
+    private NavigationManager NavigationManager { get; set; } = default!;
+}

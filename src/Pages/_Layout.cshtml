@@ -1,0 +1,25 @@
+﻿@using Microsoft.AspNetCore.Components.Web
+@namespace Melinoe.Pages
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <base href="~/" />
+    <link href="site.css" rel="stylesheet" />
+    <link rel="icon" href="/icon.svg">
+    <title>Melinoe</title>
+    <component type="typeof(HeadOutlet)" render-mode="ServerPrerendered" />
+</head>
+<body>
+    @RenderBody()
+    <div id="blazor-error-ui">
+            Oops!
+        <a href="" class="reload">Reload page</a>
+        <a class="dismiss">🗙</a>
+    </div>
+    <script src="_framework/blazor.server.js"></script>
+</body>
+</html>
