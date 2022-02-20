@@ -1,0 +1,66 @@
+﻿@using Melinoe.Game
+@using Melinoe.Game.Table
+@inherits GameComponent
+
+<PageTitle>
+    In Game @Subscription.GameCode 👻
+</PageTitle>
+
+<MudContainer MaxWidth="MaxWidth.Medium" Class="pt-3 pb-6">
+    <div class="d-flex flex-row justify-center align-center">
+        <MudText Align="Align.Center" Typo="Typo.h4">
+            @Subscription.GameCode
+        </MudText>
+        <MudIconButton Icon="@Icons.Material.Filled.ContentCopy" OnClick="CopyLinkToClipboardAsync" Class="ml-1 pa-2" />
+    </div>
+    <div class="d-flex flew-row justify-center align-end mt-1 mb-4">
+        <div style="width: 120px;">
+            <MudText Align="Align.Center" Typo="Typo.body1">
+                Game Type
+            </MudText>
+            @if (Subscription.Game.Type == GameType.Nightmare)
+            {
+                <MudButton Variant="Variant.Outlined" 
+                            Color="Color.Error" 
+                            OnClick="() => Subscription.Game.UpdateTypeAsync(GameType.Normal)"
+                            FullWidth="true">
+                    Nightmare
+                </MudButton>
+            }
+            else
+            {
+                <MudButton Variant="Variant.Outlined" 
+                            Color="Color.Primary" 
+                            OnClick="() => Subscription.Game.UpdateTypeAsync(GameType.Nightmare)"
+                            FullWidth="true">
+                    Normal
+                </MudButton>
+            }
+        </div>
+        <MudDivider Vertical="true" FlexItem="true" Class="mt-6 mx-4" Light="true" />
+        <MudButton OnClick="Leave"
+                    Variant="Variant.Outlined"
+                    Color="Color.Error"
+                    EndIcon="@Icons.Filled.ExitToApp">
+            Leave
+        </MudButton>
+    </div>
+
+    <GameTable Subscription="Subscription" />
+</MudContainer>
+
+@code {
+    [Inject]
+    private IJSRuntime JsRuntime { get; set; } = default!;
+
+    [Inject]
+    private NavigationManager NavigationManager { get; set; } = default!;
+
+    [Parameter, EditorRequired]
+    public Action Leave { get; set; } = () => { };
+
+    private string PageLink => NavigationManager.ToAbsoluteUri($"/{Subscription?.GameCode}").ToString();
+
+    private async Task CopyLinkToClipboardAsync() =>
+        await JsRuntime.InvokeVoidAsync("clipboardInterop.copy", PageLink);
+}

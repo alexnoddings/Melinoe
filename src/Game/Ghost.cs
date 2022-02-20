@@ -22,7 +22,7 @@ public enum GhostType
 	Twins,
 	Wraith,
 	Yokai,
-	Yure,
+	Yurei,
 }
 
 public enum GhostState

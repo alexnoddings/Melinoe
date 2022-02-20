@@ -1,45 +1,21 @@
 ﻿@page "/{GameCode:int?}"
 @using Melinoe.Game
+@using Melinoe.Game.Connection
+@using Melinoe.Game.Container
+@using Melinoe.Game.Table
 @implements IDisposable
 
 <PageTitle>
-    @(Subscription is null ? "Join Game" : $"In Game {Subscription.GameCode}")
+    @((Subscription is null ? "Join Game" : $"In Game {Subscription.GameCode}") + " 👻")
 </PageTitle>
 
 @if (Subscription is null)
 {
-    <h4>Home</h4>
-    <hr/>
-    <input @bind-value="InputCode" class="auto-focus"></input>
-    <button @onclick="Join">Join</button>
-    <hr/>
-    <button @onclick="Create">Create</button>
+    <ConnectDialogue Create="Create" Join="Join" JoinError="@JoinError" />
 }
 else
 {
-    <h4>@Subscription.GameCode</h4>
-    <p>
-        @NavigationManager.ToAbsoluteUri($"/{Subscription.GameCode}")
-    </p>
-    <hr/>
-    @foreach (var evidence in Subscription.Game.Evidences)
-    {
-        var capturedEvidence = evidence;
-        <p>
-            <text>@evidence.Type:</text>
-            <button @onclick="() => Subscription.Game.UpdateEvidenceAsync(capturedEvidence.Type, EvidenceState.Missing)" disabled="@(capturedEvidence.State == EvidenceState.Missing)">
-                @EvidenceState.Missing
-            </button>
-            <button @onclick="() => Subscription.Game.UpdateEvidenceAsync(capturedEvidence.Type, EvidenceState.Unknown)" disabled="@(capturedEvidence.State == EvidenceState.Unknown)">
-                @EvidenceState.Unknown
-            </button>
-            <button @onclick="() => Subscription.Game.UpdateEvidenceAsync(capturedEvidence.Type, EvidenceState.Present)" disabled="@(capturedEvidence.State == EvidenceState.Present)">
-                @EvidenceState.Present
-            </button>
-        </p>
-    }
-    <hr/>
-    <button @onclick="Leave">Leave</button>
+    <GameContainer Subscription="Subscription" Leave="Leave" />
 }
 
 @code {
@@ -52,9 +28,9 @@ else
     [Inject]
     private NavigationManager NavigationManager { get; set; } = default!;
 
-    private string InputCode { get; set; } = string.Empty;
-
     private IGameSubscription? Subscription { get; set; }
+
+    private string? JoinError { get; set; }
 
     protected override void OnInitialized()
     {
@@ -65,11 +41,7 @@ else
         if (Subscription is not null)
             return;
 
-        Subscription = Games.Get(GameCode.Value);
-        if (Subscription is null)
-            NavigationManager.NavigateTo("/");
-        else
-            Subscription.Game.OnUpdated += OnGameUpdatedAsync;
+        Join(GameCode.Value, false);
     }
 
     private void Create()
@@ -79,16 +51,21 @@ else
         NavigationManager.NavigateTo($"/{Subscription.GameCode}");
     }
 
-    private void Join()
-    {
-        if (!int.TryParse(InputCode, out int gameCode))
-            return;
+    private void Join(int code) => Join(code, true);
 
-        Subscription = Games.Get(gameCode);
+    private void Join(int code, bool navigateOnSuccess)
+    {
+        Subscription = Games.Get(code);
         if (Subscription is not null)
         {
-            NavigationManager.NavigateTo($"/{Subscription.GameCode}");
+            if (navigateOnSuccess)
+                NavigationManager.NavigateTo($"/{Subscription.GameCode}");
             Subscription.Game.OnUpdated += OnGameUpdatedAsync;
+        }
+        else
+        {
+            JoinError = $"Game {code} not found";
+            NavigationManager.NavigateTo("/");
         }
     }
 
@@ -100,7 +77,7 @@ else
             Subscription.Dispose();
             Subscription = null;
         }
-        NavigationManager.NavigateTo("/"); 
+        NavigationManager.NavigateTo("/");
     }
 
     private Task OnGameUpdatedAsync() => InvokeAsync(StateHasChanged);
@@ -109,7 +86,7 @@ else
     {
         if (Subscription is null)
             return;
-            
+
         Subscription.Game.OnUpdated -= OnGameUpdatedAsync;
         Subscription.Dispose();
     }

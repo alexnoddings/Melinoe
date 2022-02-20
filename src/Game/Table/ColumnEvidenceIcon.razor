@@ -1,0 +1,39 @@
+﻿<MudIcon Icon="@Icon" Color="Colour" />
+
+@code
+{
+	[Parameter, EditorRequired]
+	public IEvidence Evidence { get; set; } = default!;
+
+	[Parameter]
+	public GhostState? GhostState { get; set; }
+
+	private string Icon => 
+		Evidence.Type switch
+		{
+			EvidenceType.DotsProjector => Icons.Filled.DirectionsWalk,
+			EvidenceType.EmfLevel5 => Icons.Filled.Speed,
+			EvidenceType.Fingerprints => Icons.Filled.Fingerprint,
+			EvidenceType.FreezingTemperatures => Icons.Filled.AcUnit,
+			EvidenceType.GhostOrbs => Icons.Filled.ScatterPlot,
+			EvidenceType.GhostWriting  => Icons.Filled.MenuBook,
+			EvidenceType.SpiritBox => Icons.Filled.Radio,
+			_ => Icons.Filled.QuestionMark,
+		};
+
+	private Color Colour =>
+		GhostState switch
+		{
+			Game.GhostState.NotPossible => Color.Dark,
+			Game.GhostState.Definite => Color.Default,
+			_ => FallbackColour
+		};
+
+	private Color FallbackColour =>Evidence.State switch
+		{
+			EvidenceState.Missing => Color.Error,
+			EvidenceState.Unknown => Color.Warning,
+			EvidenceState.Present => Color.Success,
+			_ => Color.Inherit
+		};
+}

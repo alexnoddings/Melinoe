@@ -1,0 +1,25 @@
+﻿<MudIconButton Icon="@Icon"
+                OnClick="() => Game.UpdateEvidenceAsync(Evidence.Type, State)"
+                Disabled="Evidence.State == State"
+                Class="pa-1"
+                Size="Size.Small" />
+
+@code 
+{
+    [Parameter, EditorRequired]
+    public SyncedGame Game { get; set; } = default!;
+
+    [Parameter, EditorRequired]
+    public IEvidence Evidence { get; set; } = default!;
+
+    [Parameter, EditorRequired]
+    public EvidenceState State { get; set; }
+
+    private string Icon => State switch
+    {
+        EvidenceState.Unknown => Icons.Filled.QuestionMark,
+        EvidenceState.Present => Icons.Filled.Check,
+        EvidenceState.Missing => Icons.Filled.Close,
+        _ => Icons.Filled.QuestionMark,
+    };
+}

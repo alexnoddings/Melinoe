@@ -1,5 +1,6 @@
 ﻿namespace Melinoe.Game;
 
+[Flags]
 public enum EvidenceType
 {
 	DotsProjector = 1 << 1,
