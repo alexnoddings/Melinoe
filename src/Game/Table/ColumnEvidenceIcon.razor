@@ -24,7 +24,7 @@
 	private Color Colour =>
 		GhostState switch
 		{
-			Game.GhostState.NotPossible => Color.Dark,
+			Game.GhostState.NotPossible => Color.Inherit,
 			Game.GhostState.Definite => Color.Default,
 			_ => FallbackColour
 		};

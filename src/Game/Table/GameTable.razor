@@ -26,7 +26,7 @@
         {
             <tr style="@RowStyle(ghost.State)">
                 <td class="px-2 py-1">
-                    <MudText Color="GhostNameColor(ghost)">
+                    <MudText Color="Color.Inherit">
                         @Localiser[ghost.Type.ToString()]
                     </MudText>
                 </td>
@@ -52,16 +52,8 @@
             ghostState switch
             {
                 GhostState.Potential => "",
-                GhostState.NotPossible => "background-color: var(--mud-palette-error-lighten)",
-                GhostState.Definite => "background-color: var(--mud-palette-success)",
+                GhostState.NotPossible => "background-color: #5A0F11; color: #BBBBBBBB;",
+                GhostState.Definite => "background-color: #11802B; color: #FFFFFFFF;",
                 _ => "",
             };
-
-    private Color GhostNameColor(IGhost ghost) =>
-        ghost.State switch
-        {
-            GhostState.Definite => Color.Default,
-            GhostState.NotPossible => Color.Dark,
-            _ => Color.Inherit
-        };
 }
