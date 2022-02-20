@@ -1,4 +1,6 @@
-﻿@inherits GameComponent
+﻿@using Microsoft.Extensions.Localization
+@inherits GameComponent
+@inject IStringLocalizer<App> Localiser
 
 <MudSimpleTable Dense="true" Hover="true" Bordered="true" Striped="true" Style="overflow-x: auto;">
     <thead>
@@ -25,7 +27,7 @@
             <tr style="@RowStyle(ghost.State)">
                 <td class="px-2 py-1">
                     <MudText Color="GhostNameColor(ghost)">
-                        @ghost.Type
+                        @Localiser[ghost.Type.ToString()]
                     </MudText>
                 </td>
                 @foreach (var evidence in Game.Evidences)

@@ -1,4 +1,7 @@
-﻿<MudTooltip Class="d-inline-flex test" Text="@Evidence.Type.ToString()">
+﻿@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<App> Localiser
+
+<MudTooltip Class="d-inline-flex test" Text="@Localiser[Evidence.Type.ToString()]">
 	<MudIcon Icon="@Icon" Color="Colour" />
 </MudTooltip>
 
