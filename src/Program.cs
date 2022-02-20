@@ -1,3 +1,4 @@
+using Blazored.LocalStorage;
 using Melinoe.Game;
 using MudBlazor.Services;
 
@@ -7,6 +8,8 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddMudServices();
 builder.Services.AddSingleton<GameCollection>();
+builder.Services.AddLocalization(options => options.ResourcesPath = "");
+builder.Services.AddBlazoredLocalStorage();
 
 var app = builder.Build();
 
@@ -16,6 +19,8 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
+app.UseRequestLocalization();
+
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
 
