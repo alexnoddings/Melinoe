@@ -131,7 +131,7 @@ public class SyncedGame
 			new(GhostType.Obake, EvidenceType.EmfLevel5 | EvidenceType.GhostOrbs | EvidenceType.Fingerprints),
 			new(GhostType.Oni, EvidenceType.EmfLevel5 | EvidenceType.FreezingTemperatures | EvidenceType.DotsProjector),
 			new(GhostType.Onryo, EvidenceType.GhostOrbs | EvidenceType.SpiritBox | EvidenceType.FreezingTemperatures),
-			new(GhostType.Phantom, EvidenceType.SpiritBox | EvidenceType.FreezingTemperatures | EvidenceType.DotsProjector),
+			new(GhostType.Phantom, EvidenceType.SpiritBox | EvidenceType.Fingerprints | EvidenceType.DotsProjector),
 			new(GhostType.Poltergeist, EvidenceType.SpiritBox | EvidenceType.Fingerprints | EvidenceType.GhostWriting),
 			new(GhostType.Raiju, EvidenceType.EmfLevel5 | EvidenceType.GhostOrbs | EvidenceType.DotsProjector),
 			new(GhostType.Revenant, EvidenceType.GhostOrbs | EvidenceType.FreezingTemperatures | EvidenceType.GhostWriting),
