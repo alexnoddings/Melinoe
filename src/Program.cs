@@ -8,6 +8,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddMudServices();
 builder.Services.AddSingleton<GameCollection>();
+builder.Services.AddSingleton<WikiLinkService>();
 builder.Services.AddLocalization(options => options.ResourcesPath = "");
 builder.Services.AddBlazoredLocalStorage();
 

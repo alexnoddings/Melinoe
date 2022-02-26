@@ -1,8 +1,9 @@
 ﻿@using Microsoft.Extensions.Localization
 @inherits GameComponent
 @inject IStringLocalizer<App> Localiser
+@inject WikiLinkService WikiLinks
 
-<MudPaper Class="pa-3 mx-auto" Style="max-width: 650px;">
+<MudPaper Class="pa-3 mx-auto" Style="max-width: 720px;">
     <MudGrid Class="px-14">
         @foreach (var evidence in Game.Evidences.OrderBy(evidence => GetEvidenceOrder(evidence.Type)))
         {
@@ -14,6 +15,7 @@
                             Size="Size.Large">
                         @Localiser[evidence.Type.ToString()]
                     </MudButton>
+                    <MudIconButton Class="pa-1 ml-n2" Icon="@Icons.Filled.OpenInNew" Link="@WikiLinks.GetWikiLinkFor(evidence)" Target="_blank" />
                 </MudText>
             </MudItem>
         }
@@ -23,8 +25,14 @@
         @foreach (var ghost in Game.Ghosts.OrderBy(ghost => GetGhostOrder(ghost.Type)))
         {
             <MudItem xs="4">
-                <MudText Color="GhostColour(ghost.State)" Align="Align.Center" Typo="Typo.h5" Style="@(ghost.State == GhostState.NotPossible ? "text-decoration: line-through;" : "")">
-                    @Localiser[ghost.Type.ToString()]
+                <MudText Align="Align.Center">
+                    <MudLink Color="GhostColour(ghost.State)" 
+                             Typo="Typo.h5" 
+                             Style="@(ghost.State == GhostState.NotPossible ? "text-decoration: line-through;" : "")" 
+                             Href="@WikiLinks.GetWikiLinkFor(ghost)"
+                             Target="_blank">
+                        @Localiser[ghost.Type.ToString()]
+                    </MudLink>
                 </MudText>
             </MudItem>
         }

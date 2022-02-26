@@ -1,6 +1,7 @@
 ﻿@using Microsoft.Extensions.Localization
 @inherits GameComponent
 @inject IStringLocalizer<App> Localiser
+@inject WikiLinkService WikiLinks
 
 <MudSimpleTable Dense="true" Hover="true" Bordered="true" Striped="true" Style="overflow-x: auto;">
     <thead>
@@ -26,9 +27,12 @@
         {
             <tr style="@RowStyle(ghost.State)">
                 <td class="px-2 py-1">
-                    <MudText Color="Color.Inherit">
+                    <MudLink Color="Color.Inherit" 
+                             Typo="Typo.body2"
+                             Href="@WikiLinks.GetWikiLinkFor(ghost)"
+                             Target="_blank">
                         @Localiser[ghost.Type.ToString()]
-                    </MudText>
+                    </MudLink>
                 </td>
                 @foreach (var evidence in Game.Evidences)
                 {
