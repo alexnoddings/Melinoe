@@ -8,7 +8,7 @@ public interface IGameSubscription : IDisposable
 
 public class GameCollection
 {
-	private class GameInfo 
+	private sealed class GameInfo
 	{
 		public List<GameSubscription> Subscriptions { get; } = new();
 		public SyncedGame Game { get; }
@@ -19,7 +19,7 @@ public class GameCollection
 		}
 	}
 
-	private class GameSubscription : IGameSubscription
+	private sealed class GameSubscription : IGameSubscription
 	{
 		public int GameCode { get; }
 		public SyncedGame Game { get; }
@@ -54,7 +54,7 @@ public class GameCollection
 	private int GetNextGameCode()
 	{
 		var gameCode = -1;
-		for (int i = 0; i < 512; i++)
+		for (var i = 0; i < 512; i++)
 		{
 			var newCode = Random.Next(100_000, 999_999);
 			if (Games.ContainsKey(newCode))
@@ -66,7 +66,7 @@ public class GameCollection
 		if (gameCode != -1)
 			return gameCode;
 
-		for (int i = 100_000; i <= 999_999; i++)
+		for (var i = 100_000; i <= 999_999; i++)
 		{
 			if (Games.ContainsKey(i))
 				continue;

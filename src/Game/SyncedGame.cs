@@ -2,7 +2,7 @@
 
 public class SyncedGame
 {
-	private class Evidence : IEvidence
+	private sealed class Evidence : IEvidence
 	{
 		public EvidenceType Type { get; }
 		public EvidenceState State { get; set; }
@@ -14,7 +14,7 @@ public class SyncedGame
 		}
 	}
 
-	private class Ghost : IGhost
+	private sealed class Ghost : IGhost
 	{
 		public GhostType Type { get; }
 		public GhostState State { get; set; }
@@ -82,7 +82,7 @@ public class SyncedGame
 
 		var maximumMissing = Type == GameType.Nightmare ? 1 : 0;
 
-		EvidenceType evidenceOfType(EvidenceState state) => 
+		EvidenceType evidenceOfType(EvidenceState state) =>
 			_evidences
 			.Where(evidence => evidence.State == state)
 			.Aggregate((EvidenceType)0, (acc, current) => acc | current.Type);
@@ -91,7 +91,6 @@ public class SyncedGame
 			Enum.GetValues<EvidenceType>()
 			.Count(evidenceType => required.HasFlag(evidenceType) && missing.HasFlag(evidenceType));
 
-		EvidenceType unknownEvidence = evidenceOfType(EvidenceState.Unknown);
 		EvidenceType presentEvidence = evidenceOfType(EvidenceState.Present);
 		EvidenceType missingEvidence = evidenceOfType(EvidenceState.Missing);
 
@@ -111,7 +110,6 @@ public class SyncedGame
 			if ((ghost.RequiredEvidence & presentEvidence) != presentEvidence)
 				ghost.State = GhostState.NotPossible;
 		}
-		
 
 		if (_ghosts.Count(ghost => ghost.State == GhostState.Potential) == 1)
 			_ghosts.First(ghos => ghos.State == GhostState.Potential).State = GhostState.Definite;

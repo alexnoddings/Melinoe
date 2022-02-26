@@ -38,4 +38,3 @@ public interface IGhost
 	public GhostState State { get; }
 	public EvidenceType RequiredEvidence { get; }
 }
-

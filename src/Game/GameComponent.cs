@@ -13,7 +13,7 @@ public class GameComponent : ComponentBase, IDisposable
 	protected override void OnParametersSet()
 	{
 		if (Subscription is null)
-			throw new ArgumentNullException(nameof(Subscription));
+			throw new InvalidOperationException($"{nameof(Subscription)} cannot be null.");
 
 		if (Subscription != _previousSubscription)
 		{
@@ -26,6 +26,15 @@ public class GameComponent : ComponentBase, IDisposable
 	protected async Task OnGameUpdatedAsync() => 
 		await InvokeAsync(StateHasChanged);
 
-	public void Dispose() =>
-		Subscription.Game.OnUpdated -= OnGameUpdatedAsync;
+	protected virtual void Dispose(bool disposing)
+	{
+		if (disposing)
+			Subscription.Game.OnUpdated -= OnGameUpdatedAsync;
+	}
+
+	public void Dispose()
+	{
+		Dispose(disposing: true);
+		GC.SuppressFinalize(this);
+	}
 }
