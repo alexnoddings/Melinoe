@@ -6,12 +6,12 @@
 <MudSimpleTable Dense="true" Hover="true" Bordered="true" Striped="true" Style="overflow-x: auto;">
     <thead>
         <tr>
-            <th>Ghost</th>
+            <th class="py-1 px-2">Ghost</th>
             @foreach (var evidence in Game.Evidences)
             {
-                <th>
+                <th class="py-1 px-2" style="vertical-align: bottom">
                     <div class="d-flex flex-column align-center">
-                        <HeaderEvidenceIcon Evidence="evidence" />
+                        <EvidenceHeader Evidence="evidence" />
                         <div class="d-flex flex-row">
                             <EvidenceStateButton Game="Game" Evidence="evidence" State="EvidenceState.Missing" />
                             <EvidenceStateButton Game="Game" Evidence="evidence" State="EvidenceState.Unknown" />
@@ -40,7 +40,7 @@
                         @if (ghost.RequiredEvidence.HasFlag(evidence.Type))
                         {
                             <div class="d-flex justify-center">
-                                <ColumnEvidenceIcon Evidence="evidence" GhostState="ghost.State" />
+                                <EvidenceColumnIcon Evidence="evidence" GhostState="ghost.State" />
                             </div>
                         }
                     </td>

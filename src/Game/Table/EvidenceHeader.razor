@@ -1,0 +1,23 @@
+﻿@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<App> Localiser
+@inject WikiLinkService WikiLinks
+
+<MudText Align="Align.Center">
+	<MudLink Typo="Typo.caption" Color="Colour" Href="@WikiLinks.GetWikiLinkFor(Evidence)" Target="_blank">
+		@Localiser[Evidence.Type.ToString()]
+	</MudLink>
+</MudText>
+
+@code
+{
+	[Parameter, EditorRequired]
+	public IEvidence Evidence { get; set; } = default!;
+
+	private Color Colour => Evidence.State switch
+		{
+			EvidenceState.Missing => Color.Error,
+			EvidenceState.Unknown => Color.Warning,
+			EvidenceState.Present => Color.Success,
+			_ => Color.Inherit
+		};
+}
