@@ -1,0 +1,25 @@
+﻿@inherits GameComponent
+
+<MudIconButton OnClick="() => Game.UpdateIsRuledOutAsync(Ghost, !Ghost.IsRuledOut)"
+               Size="Size.Small" 
+               Icon="@GhostRuleOutIcon"
+               Class="pa-0 pl-1" 
+               Disabled="IsGhostRuleOutIconDisabled" />
+
+@code {
+    [Parameter, EditorRequired]
+    public IGhost Ghost { get; set; } = default!;
+
+    private bool IsGhostRuleOutIconDisabled =>
+        Ghost.State is GhostState.Definite
+        || (Ghost.State is GhostState.NotPossible && !Ghost.IsRuledOut);
+
+    private string GhostRuleOutIcon =>
+        Ghost.State switch
+        {
+            GhostState.Definite => Icons.Filled.Check,
+            GhostState.Potential => Icons.Filled.Block,
+            _ when Ghost.IsRuledOut => Icons.Filled.QuestionMark,
+            _ => Icons.Filled.Close
+        };
+}

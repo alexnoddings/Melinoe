@@ -67,10 +67,25 @@ public class SyncedGame
 			await OnUpdated.Invoke();
 	}
 
-	public async Task ResesEvidenceAsync()
+	public async Task UpdateIsRuledOutAsync(IGhost ghost, bool isRuledOut)
+	{
+		var localGhost = _ghosts.FirstOrDefault(localGhost => localGhost.Type == ghost.Type);
+		if (localGhost is null)
+			return;
+
+		localGhost.IsRuledOut = isRuledOut;
+		RecalculateGhostStates();
+		if (OnUpdated is not null)
+			await OnUpdated.Invoke();
+	}
+
+	public async Task ResetGameAsync()
 	{
 		foreach (var evidence in _evidences)
 			evidence.State = EvidenceState.Unknown;
+
+		foreach (var ghost in _ghosts)
+			ghost.IsRuledOut = false;
 
 		RecalculateGhostStates();
 		if (OnUpdated is not null)
