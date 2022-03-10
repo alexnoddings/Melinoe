@@ -40,7 +40,7 @@
                         @if (ghost.RequiredEvidence.HasFlag(evidence.Type))
                         {
                             <div class="d-flex justify-center">
-                                <EvidenceColumnIcon Evidence="evidence" GhostState="ghost.State" />
+                                <EvidenceColumnIcon Evidence="evidence" IsAbsolute="ghost.AbsoluteEvidence.HasFlag(evidence.Type)" GhostState="ghost.State" />
                             </div>
                         }
                     </td>

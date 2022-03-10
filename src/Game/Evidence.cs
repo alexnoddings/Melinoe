@@ -3,6 +3,7 @@
 [Flags]
 public enum EvidenceType
 {
+	None = 0,
 	DotsProjector = 1 << 1,
 	EmfLevel5 = 1 << 2,
 	Fingerprints = 1 << 3,

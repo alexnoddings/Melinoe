@@ -1,4 +1,4 @@
-﻿<MudIcon Icon="@Icon" Color="Colour" />
+﻿<MudIcon Icon="@Icon" Color="Colour" Style="@Style" />
 
 @code
 {
@@ -7,6 +7,9 @@
 
 	[Parameter]
 	public GhostState? GhostState { get; set; }
+
+	[Parameter]
+	public bool IsAbsolute { get; set; }
 
 	private string Icon => 
 		Evidence.Type switch
@@ -29,11 +32,16 @@
 			_ => FallbackColour
 		};
 
-	private Color FallbackColour =>Evidence.State switch
+	private Color FallbackColour => Evidence.State switch
 		{
 			EvidenceState.Missing => Color.Error,
 			EvidenceState.Unknown => Color.Warning,
 			EvidenceState.Present => Color.Success,
 			_ => Color.Inherit
 		};
+
+	private string Style =>
+		IsAbsolute 
+		? "border-bottom: 1px solid currentColor" 
+		: "";
 }
