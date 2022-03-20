@@ -1,9 +1,12 @@
-FROM mcr.microsoft.com/dotnet/aspnet:7.0-focal AS base
+#FROM mcr.microsoft.com/dotnet/aspnet:7.0-focal AS base
+FROM mcr.microsoft.com/dotnet/aspnet:7.0.100-preview.1-focal AS base
 WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
-FROM mcr.microsoft.com/dotnet/sdk:7.0-focal AS build
+# Temp fix for Preview 2 issue (CS7000: Unexpected use of an aliased name)
+#FROM mcr.microsoft.com/dotnet/sdk:7.0-focal AS build
+FROM mcr.microsoft.com/dotnet/sdk:7.0.100-preview.1-focal AS build
 WORKDIR /src
 COPY ["src/Melinoe.csproj", "src/"]
 RUN dotnet restore "src/Melinoe.csproj"
