@@ -18,7 +18,7 @@ jobs:
       with:
         # Temp fix for Preview 2 issue (CS7000: Unexpected use of an aliased name)
         #dotnet-version: 7.0.x
-        dotnet-version: 7.0.100-preview.2
+        dotnet-version: 7.0.100-preview.1.22110.4
         include-prerelease: true
     - name: Restore dependencies
       run: dotnet restore
