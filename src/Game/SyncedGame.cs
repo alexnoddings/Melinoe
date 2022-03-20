@@ -171,7 +171,7 @@ public class SyncedGame
 			new(GhostType.Banshee, EvidenceType.GhostOrbs | EvidenceType.Fingerprints | EvidenceType.DotsProjector),
 			new(GhostType.Demon, EvidenceType.FreezingTemperatures | EvidenceType.Fingerprints | EvidenceType.GhostWriting),
 			new(GhostType.Goryo, EvidenceType.EmfLevel5 | EvidenceType.Fingerprints | EvidenceType.DotsProjector, absoluteEvidence: EvidenceType.DotsProjector),
-			new(GhostType.Hantu, EvidenceType.GhostOrbs | EvidenceType.FreezingTemperatures | EvidenceType.Fingerprints),
+			new(GhostType.Hantu, EvidenceType.GhostOrbs | EvidenceType.FreezingTemperatures | EvidenceType.Fingerprints, absoluteEvidence: EvidenceType.FreezingTemperatures),
 			new(GhostType.Jinn, EvidenceType.EmfLevel5 | EvidenceType.FreezingTemperatures | EvidenceType.Fingerprints),
 			new(GhostType.Mare, EvidenceType.GhostOrbs | EvidenceType.SpiritBox | EvidenceType.GhostWriting),
 			new(GhostType.Myling, EvidenceType.EmfLevel5 | EvidenceType.Fingerprints | EvidenceType.GhostWriting),
