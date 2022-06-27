@@ -175,7 +175,7 @@ public class SyncedGame
 			new(GhostType.Hantu, EvidenceType.GhostOrbs | EvidenceType.FreezingTemperatures | EvidenceType.Fingerprints, absoluteEvidence: EvidenceType.FreezingTemperatures),
 			new(GhostType.Jinn, EvidenceType.EmfLevel5 | EvidenceType.FreezingTemperatures | EvidenceType.Fingerprints),
 			new(GhostType.Mare, EvidenceType.GhostOrbs | EvidenceType.SpiritBox | EvidenceType.GhostWriting),
-			new(GhostType.Moroi, EvidenceType.SpiritBox | EvidenceType.FreezingTemperatures | EvidenceType.GhostWriting),
+			new(GhostType.Moroi, EvidenceType.SpiritBox | EvidenceType.FreezingTemperatures | EvidenceType.GhostWriting, absoluteEvidence: EvidenceType.SpiritBox),
 			new(GhostType.Myling, EvidenceType.EmfLevel5 | EvidenceType.Fingerprints | EvidenceType.GhostWriting),
 			new(GhostType.Obake, EvidenceType.EmfLevel5 | EvidenceType.GhostOrbs | EvidenceType.Fingerprints, absoluteEvidence: EvidenceType.Fingerprints),
 			new(GhostType.Oni, EvidenceType.EmfLevel5 | EvidenceType.FreezingTemperatures | EvidenceType.DotsProjector),
